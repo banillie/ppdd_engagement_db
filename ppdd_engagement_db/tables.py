@@ -49,7 +49,7 @@ def ppdds_table():
         PPDDLastName TEXT,
         PPDDRole TEXT,
         PPDDTeam TEXT,
-        PPDDTeleNo TEXT
+        PPDDTeleNo INTEGER
         )'''
     )
 
@@ -64,12 +64,12 @@ def engagements_table():
         EngDate DATE,
         EngShortSum TEXT,
         EngLongSum TEXT,
-        EngFollowUpDate TEXT
+        EngFollowUpDate DATE
         )'''
     )
 
 
-def p_stakeholder_table():
+def project_stakeholders_table():
     cur.execute("""
         DROP TABLE IF EXISTS ProjectStakeholders;
         """)
@@ -84,7 +84,7 @@ def p_stakeholder_table():
     )
 
 
-def p_engagement_table():
+def project_engagement_table():
     cur.execute("""
         DROP TABLE IF EXISTS ProjectEngagements;
         """)
@@ -99,7 +99,7 @@ def p_engagement_table():
     )
 
 
-def e_stakeholders_table():
+def engagement_stakeholders_table():
     cur.execute("""
         DROP TABLE IF EXISTS EngagementStakeholders;
         """)
@@ -164,19 +164,19 @@ def enter_data(data: list, table_name: str):
         cur.execute(f"INSERT INTO {table_name} VALUES (?,?,?)", d)
 
 
-# stakeholder_data = ppdd_data(root_path / "ppdd_engagement_db_tables.xlsx", "Stakeholders", 9)
-# project_data = ppdd_data(root_path / "ppdd_engagement_db_tables.xlsx", "Projects", 7)
-# ppdd_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "PPDDs", 7)
-# engagement_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "Engagements", 6)
+# stakeholder_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "Stakeholders", 9, 60)
+# project_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "Projects", 7)
+# ppdd_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "PPDDs", 7, 17)
+# engagement_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "Engagements", 6, 81)
 # ps_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "ProjectStakeholders", 4)
 # p_engagements_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "ProjectEngagements", 4)
-# engagements_s_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementStakeholders", 4)
+engagements_s_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementStakeholders", 4, 76)
 # engagements_ppdd_data = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementPPDDs", 4)
 # engagement_types = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementTypes", 4)
-engagement_ws = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementWorkStreams", 4)
+# engagement_ws = get_data(root_path / "ppdd_engagement_db_tables.xlsx", "EngagementWorkStreams", 4)
 
-engagement_ws_table()
+engagement_stakeholders_table()
 
-enter_data(engagement_ws, "EngagementWorkStreams")
+enter_data(engagements_s_data, "EngagementStakeholders")
 con.commit()
 con.close()
